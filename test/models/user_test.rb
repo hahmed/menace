@@ -83,4 +83,41 @@ class UserTest < ActiveSupport::TestCase
     assert user.avatar.authorize_blob?
     assert user.cover_photo.authorize_blob?
   end
+
+  test "user authorized for has_many_attached documents when default override returns true" do
+    klass = Class.new(User) do
+      def authorize_blob?(accessor)
+        true
+      end
+    end
+
+    user = klass.new(documents: [@another_blob])
+    assert user.documents.first.authorize_blob?
+  end
+
+  test "user unauthorized for has_many_attached documents when default override returns false" do
+    klass = Class.new(User) do
+      def authorize_blob?(accessor)
+        false
+      end
+    end
+
+    user = klass.new(documents: [@another_blob])
+    refute user.documents.first.authorize_blob?
+  end
+
+  test "user authorized for has_many_attached documents when override returns true" do
+    klass = Class.new(User) do
+      def authorize_blob?(accessor)
+        false
+      end
+
+      def authorize_blob_documents?(accessor)
+        true
+      end
+    end
+
+    user = klass.new(documents: [@another_blob])
+    assert user.documents.first.authorize_blob?
+  end
 end
