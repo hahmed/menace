@@ -8,13 +8,13 @@ class RedirectControllerTest < ActionDispatch::IntegrationTest
     assert ActiveStorage::Representations::RedirectController.ancestors.include?(ActiveStorage::SetBlob)
   end
 
-  test "returns redirect response for undefined override on resource" do
+  test "returns redirect response when undefined override on resource" do
     blob = create_blob
     get rails_blob_path(blob)
     assert_redirected_to(/1x1\.png/)
   end
 
-  test "returns forbidden response for default override resource" do
+  test "returns forbidden response when default override resource" do
     User.any_instance.stubs(:authorize_blob?).returns(false)
     user = User.create!(avatar: create_blob)
     Current.resource = user
@@ -24,7 +24,7 @@ class RedirectControllerTest < ActionDispatch::IntegrationTest
     assert_response :forbidden
   end
 
-  test "returns forbidden response for override returns false" do
+  test "returns forbidden response when override returns false" do
     User.any_instance.stubs(:authorize_blob_avatar?).returns(false)
     user = User.create!(avatar: create_blob)
     Current.resource = user
@@ -33,7 +33,7 @@ class RedirectControllerTest < ActionDispatch::IntegrationTest
     assert_response :forbidden
   end
 
-  test "redirects successfully for default override returns true" do
+  test "redirects successfully when default override returns true" do
     User.any_instance.stubs(:authorize_blob?).returns(true)
     user = User.create!(avatar: create_blob)
     Current.resource = user
@@ -42,12 +42,23 @@ class RedirectControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to(/1x1\.png/)
   end
 
-  test "redirects successfully for override returns true" do
+  test "redirects successfully when override returns true" do
     User.any_instance.stubs(:authorize_blob_avatar?).returns(true)
     user = User.create!(avatar: create_blob)
     Current.resource = user
 
     get rails_blob_path(user.avatar)
+    assert_redirected_to(/1x1\.png/)
+  end
+
+  test "redirects successfully when override returns true for cover_photo" do
+    User.any_instance.stubs(:authorize_blob_avatar?).returns(false)
+    User.any_instance.stubs(:authorize_blob?).returns(true)
+
+    user = User.create!(avatar: create_blob, cover_photo: create_blob)
+    Current.resource = user
+
+    get rails_blob_path(user.cover_photo)
     assert_redirected_to(/1x1\.png/)
   end
 
