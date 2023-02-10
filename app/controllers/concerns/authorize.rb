@@ -1,4 +1,4 @@
-module Authorize # nodoc
+module Authorize
   extend ActiveSupport::Concern
 
   included do
@@ -12,13 +12,13 @@ module Authorize # nodoc
 
     def authorized?
       if resource
-        @blob.accessible_to?(resource)
+        @blob.authorize_blob?(resource)
       else
         true
       end
     end
 
     def resource
-      ActiveStorage::Current.resource
+      Current.resource
     end
 end

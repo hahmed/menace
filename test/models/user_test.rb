@@ -2,9 +2,9 @@ require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
   def setup
-    file_name = File.join(fixture_path, "files/1x1.png")
-    @blob = ActiveStorage::Blob.create_and_upload!(io: File.open(file_name), filename: "1x1.png", content_type: "image/png")
-    @another_blob = ActiveStorage::Blob.create_and_upload!(io: File.open(file_name), filename: "1x1.png", content_type: "image/png")
+    file = File.join(fixture_path, "files/1x1.png")
+    @blob = ActiveStorage::Blob.create_and_upload!(io: File.open(file), filename: "1x1.png", content_type: "image/png")
+    @another_blob = ActiveStorage::Blob.create_and_upload!(io: File.open(file), filename: "1x1.png", content_type: "image/png")
   end
 
   test "user is authorized when override defined" do

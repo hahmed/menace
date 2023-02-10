@@ -1,7 +1,3 @@
-ActiveSupport.on_load :active_storage_current do
-  attribute :resource
-end
-
 Rails.application.config.to_prepare do
   ActiveStorage::Blob.include BlobAuthorization
   ActiveStorage::Attachment.include AttachmentAuthorization

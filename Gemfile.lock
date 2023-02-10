@@ -93,6 +93,8 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.2)
     minitest (5.17.0)
+    mocha (2.0.2)
+      ruby2_keywords (>= 0.0.5)
     net-imap (0.3.4)
       date
       net-protocol
@@ -136,6 +138,7 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
+    ruby2_keywords (0.0.5)
     sqlite3 (1.6.0-arm64-darwin)
     thor (1.2.1)
     timeout (0.3.1)
@@ -151,6 +154,7 @@ PLATFORMS
 
 DEPENDENCIES
   menace!
+  mocha (~> 2.0)
   sqlite3 (~> 1.4)
 
 BUNDLED WITH
