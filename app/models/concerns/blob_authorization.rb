@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module BlobAuthorization
   def authorize_blob?(object = nil)
     attachments.includes(:record).any? { |attachment| attachment.authorize_blob?(object) } || attachments.none?

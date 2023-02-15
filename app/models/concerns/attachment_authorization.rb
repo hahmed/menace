@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module AttachmentAuthorization
   def authorize_blob?(object = nil)
-    if record.respond_to?(override_authentication_name.to_sym)
-      record.try(override_authentication_name.to_sym, object)
+    if record.respond_to?(override_authentication_name)
+      record.try(override_authentication_name, object)
     else
       fallback_authorization(object)
     end
@@ -14,6 +16,6 @@ module AttachmentAuthorization
   end
 
   def override_authentication_name
-    @_override_authentication_name ||= "authorize_blob_#{name}?"
+    @_override_authentication_name ||= "authorize_blob_#{name}?".to_sym
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Authorize
   extend ActiveSupport::Concern
 
@@ -19,6 +21,6 @@ module Authorize
     end
 
     def resource
-      Current.resource
+      Menace::Current.resource
     end
 end
