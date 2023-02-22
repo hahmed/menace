@@ -1,4 +1,4 @@
-class ProjectController < ApplicationController
+class ProjectsController < ApplicationController
   before_action :assign_admin
   before_action :assign_active_storage_resource
 
